@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SwiftBite - Login</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="form-box">
+      <img src="logo.png" alt="SwiftBite Logo" class="logo" />
+      <h1>Welcome!</h1>
+      <p>Sign up or Login to your Account</p>
+
+      <div class="toggle-buttons">
+        <button id="loginToggle" class="active">Login</button>
+        <button id="signupToggle">Sign Up</button>
+      </div>
+
+      <form id="loginForm" class="form-section">
+        <input type="email" placeholder="Enter your Email" required />
+        
+        <input type="password" placeholder="Enter your Password" required />
+        
+        <a href="#" class="forgot-link">Forgot Password?</a>
+        <button type="submit" class="form-button">LOGIN</button>
+      </form>
+
+      <form id="signupForm" class="form-section hidden">
+        <input type="text" placeholder="Enter your Name" required />
+
+        <input type="tel" placeholder="+63" required />
+
+        <input type="password" placeholder="Create Password" required />
+
+        <button type="submit" class="form-button">Next</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
