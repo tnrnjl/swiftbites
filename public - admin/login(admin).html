@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SwiftBite Admin Login</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      height: 100vh;
+    }
+
+    .left {
+      flex: 1;
+      background: url('food-bg.jpg') no-repeat center center/cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .left img {
+      max-width: 300px;
+    }
+
+    .right {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #fff;
+    }
+
+    .login-box {
+      width: 350px;
+      text-align: center;
+    }
+
+    .login-box h2 {
+      margin-bottom: 20px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      outline: none;
+    }
+
+    .login-box button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      background: #2f6f61;
+      color: #fff;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .login-box button:hover {
+      background: #24574b;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Left Side -->
+  <div class="left">
+    <img src="swiftbite-logo.png" alt="SwiftBite Logo">
+  </div>
+
+  <!-- Right Side -->
+  <div class="right">
+    <div class="login-box">
+      <h2>ADMIN LOGIN</h2>
+      <form id="loginForm">
+        <input type="email" id="username" placeholder="Enter your Email" required>
+        <input type="password" id="password" placeholder="Enter your Password" required>
+        <button type="submit">Login ➜</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      let username = document.getElementById("username").value;
+      let password = document.getElementById("password").value;
+
+      // Dummy login check
+      if(username === "admin@swiftbite.com" && password === "admin123"){
+        alert("Login successful!");
+        window.location.href = "dashboard.html"; // redirect after login
+      } else {
+        alert("Invalid username or password!");
+      }
+    });
+  </script>
+
+</body>
+</html>
