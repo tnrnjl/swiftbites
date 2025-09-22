@@ -1,44 +1,299 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SwiftBite - Login</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SwiftBite Login</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      height: 100vh;
+    }
+
+    /* Left Side with food background */
+    .left {
+      flex: 1;
+      background: url('img/bg.png') no-repeat center center/cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .logo-box {
+      width: 157px;
+      height: 157px;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .logo-box img {
+      max-width: 450px;
+    }
+
+    /* Right Side */
+    .right {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #fff;
+    }
+
+    .login-box {
+      width: 350px;
+      text-align: center;
+    }
+
+    .login-box h1 {
+      margin-bottom: 5px;
+      font-size: 28px;
+      font-weight: bold;
+      color: #1f4637;
+    }
+
+    .login-box p.subtitle {
+      margin-bottom: 20px;
+      font-size: 16px;
+      color: #555;
+    }
+
+    /* Top Tabs (Login Dropdown + Sign Up) */
+    .toggle-buttons {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+      gap: 10px;
+    }
+    .dropdown {
+      position: relative;
+    }
+    .dropdown-btn {
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 20px;
+      background: #f1f1f1;
+      color: #333;
+    }
+    .dropdown-btn.active {
+      background: #2f6f61;
+      color: #fff;
+    }
+    .dropdown-options {
+      display: none;
+      position: absolute;
+      top: 110%;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      z-index: 10;
+    }
+    .dropdown-options button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      background: #fff;
+      cursor: pointer;
+      border-radius: 10px;
+    }
+    .dropdown-options button:hover {
+      background: #f1f1f1;
+    }
+
+    .toggle-buttons .signup-btn {
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 20px;
+      background: #f1f1f1;
+      color: #333;
+    }
+    .toggle-buttons .signup-btn.active {
+      background: #2f6f61;
+      color: #fff;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      outline: none;
+    }
+
+    .login-box button.submit-btn {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      background: #2f6f61;
+      color: #fff;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .login-box button.submit-btn:hover {
+      background: #24574b;
+    }
+
+    .forgot {
+      display: block;
+      margin-top: 10px;
+      text-align: right;
+      font-size: 14px;
+      color: #2f6f61;
+      text-decoration: none;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <div class="form-box">
-      <img src="logo.png" alt="SwiftBite Logo" class="logo" />
-      <h1>Welcome!</h1>
-      <p>Sign up or Login to your Account</p>
+
+  <!-- Left Side with food background -->
+  <div class="left">
+    <div class="logo-box">
+      <img src="img/swiftbite-logo.png" alt="SwiftBite Logo">
+    </div>
+  </div>
+
+  <!-- Right Side -->
+  <div class="right">
+    <div class="login-box">
+
+      <!-- New Heading + Subtitle -->
+      <h1>WELCOME TO SWIFTBITE</h1>
+      <p class="subtitle">Online Food Delivery System</p>
 
       <div class="toggle-buttons">
-        <button id="loginToggle" class="active">Login</button>
-        <button id="signupToggle">Sign Up</button>
+        <!-- Dropdown for login -->
+        <div class="dropdown" id="loginTab">
+          <button class="dropdown-btn active" id="loginDropdown">Login ▼</button>
+          <div class="dropdown-options" id="loginOptions">
+            <button data-role="admin">Login as Admin</button>
+            <button data-role="customer">Login as Customer</button>
+          </div>
+        </div>
+        <!-- Sign Up Button -->
+        <button id="signupTab" class="signup-btn">Sign Up</button>
       </div>
 
-      <form id="loginForm" class="form-section">
-        <input type="email" placeholder="Enter your Email" required />
-        
-        <input type="password" placeholder="Enter your Password" required />
-        
-        <a href="#" class="forgot-link">Forgot Password?</a>
-        <button type="submit" class="form-button">LOGIN</button>
+      <!-- Login Form -->
+      <form id="loginForm">
+        <input type="email" id="loginEmail" placeholder="Enter your Email" required>
+        <input type="password" id="loginPassword" placeholder="Enter your Password" required>
+        <a href="#" class="forgot">Forgot Password?</a>
+        <button type="submit" class="submit-btn">Login ➜</button>
       </form>
 
-      <form id="signupForm" class="form-section hidden">
-        <input type="text" placeholder="Enter your Name" required />
-
-        <input type="tel" placeholder="+63" required />
-
-        <input type="password" placeholder="Create Password" required />
-
-        <button type="submit" class="form-button">Next</button>
+      <!-- Sign Up Form -->
+      <form id="signupForm" style="display:none;">
+        <input type="text" id="signupName" placeholder="Enter your Name" required>
+        <input type="tel" id="signupPhone" placeholder="Enter your Phone Number" required>
+        <input type="password" id="signupPassword" placeholder="Enter your Password" required>
+        <button type="submit" class="submit-btn">Next ➜</button>
       </form>
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    // Elements
+    const loginDropdown = document.getElementById("loginDropdown");
+    const loginOptions = document.getElementById("loginOptions");
+    const loginForm = document.getElementById("loginForm");
+    const signupTab = document.getElementById("signupTab");
+    const signupForm = document.getElementById("signupForm");
+    const loginTab = document.getElementById("loginTab");
+
+    let currentRole = null; // track admin/customer selection
+
+    // Dropdown toggle
+    loginDropdown.addEventListener("click", (e) => {
+      e.stopPropagation();
+      loginOptions.style.display =
+        loginOptions.style.display === "block" ? "none" : "block";
+    });
+
+    // Handle role selection
+    document.querySelectorAll("#loginOptions button").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        currentRole = e.target.dataset.role;
+        loginDropdown.textContent =
+          "Login as " +
+          currentRole.charAt(0).toUpperCase() +
+          currentRole.slice(1) +
+          " ▼";
+        loginOptions.style.display = "none";
+      });
+    });
+
+    // Switch to signup
+    signupTab.addEventListener("click", () => {
+      signupTab.classList.add("active");
+      loginDropdown.classList.remove("active");
+      signupForm.style.display = "block";
+      loginForm.style.display = "none";
+      loginOptions.style.display = "none"; // close dropdown
+    });
+
+    // Switch back to login
+    loginTab.addEventListener("click", () => {
+      loginDropdown.classList.add("active");
+      signupTab.classList.remove("active");
+      signupForm.style.display = "none";
+      loginForm.style.display = "block";
+    });
+
+    // Login form
+    loginForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      let email = document.getElementById("loginEmail").value;
+      let password = document.getElementById("loginPassword").value;
+
+      if (!currentRole) {
+        alert("Please select Admin or Customer from the Login dropdown first.");
+        return;
+      }
+
+      // Dummy login check
+      if (
+        currentRole === "admin" &&
+        email === "admin@swiftbite.com" &&
+        password === "admin123"
+      ) {
+        alert("Admin login successful!");
+        window.location.href = "admin-dashboard.html";
+      } else if (
+        currentRole === "customer" &&
+        email === "customer@swiftbite.com" &&
+        password === "cust123"
+      ) {
+        alert("Customer login successful!");
+        window.location.href = "index.html";
+      } else {
+        alert("Invalid credentials for " + currentRole.toUpperCase());
+      }
+    });
+
+    // Sign Up form (dummy)
+    signupForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      alert("Sign Up successful! You can now log in.");
+      signupForm.style.display = "none";
+      loginForm.style.display = "block";
+      signupTab.classList.remove("active");
+      loginDropdown.classList.add("active");
+    });
+  </script>
 </body>
 </html>

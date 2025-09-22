@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SwiftBite Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 220px;
+      background: #d1d1d6;
+      padding-top: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .profile-logo {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding-left: 20px;
+    }
+    .profile-logo img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+    .profile-logo h2 {
+      font-size: 18px;
+      color: #333;
+      font-weight: bold;
+    }
+
+    .sidebar a {
+      padding: 15px;
+      text-decoration: none;
+      color: black;
+      font-weight: bold;
+      display: block;
+      transition: background 0.3s;
+    }
+    .profile-logo a:hover {
+      background: none !important;
+    }
+    .sidebar a.active,
+    .sidebar a:hover {
+      background: #2f6f61;
+      color: #fff;
+    }
+
+    /* Main Content */
+    .main {
+      flex: 1;
+      background: #fff url('img/bg2.jpg') no-repeat center center;
+      background-size: cover;
+      padding: 20px;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .content-section { display: none; }
+    .content-section.active { display: block; }
+
+    /* Dashboard cards */
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .card {
+      background: #24574b;
+      color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.3s;
+    }
+    .card:hover {
+      background: #193c34;
+      transform: scale(1.05);
+    }
+
+    /* Delivery Section */
+    .delivery-item {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      background: #fff;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #ccc;
+      position: relative;
+    }
+    .food-img {
+      width: 60px;
+      height: 40px;
+      object-fit: cover;
+      margin-right: 10px;
+    }
+    .food-details { flex: 1; }
+    .food-name { font-weight: bold; margin: 0; }
+    .food-restaurant { font-size: 12px; color: gray; margin: 0; }
+
+    .motor-btn {
+      background: #24574b;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    .motor-btn:hover { background: #193c34; }
+
+    /* Back Button */
+    .back-btn {
+      background: #24574b;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-bottom: 15px;
+    }
+    .back-btn:hover { background: #193c34; }
+
+    /* Popup Panels */
+    .assign-panel, .summary-panel, .popup-panel {
+      display: none;
+      position: absolute;
+      right: 40px;
+      width: 300px;
+      background: #f9f9f9;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 15px;
+      z-index: 1000;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .assign-panel h3, .summary-panel h3, .popup-panel h3 {
+      margin-top: 0;
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .close-btn {
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      background: none;
+      color: #333;
+    }
+
+    .rider {
+      display: flex;
+      align-items: center;
+      background: #eee;
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 8px;
+    }
+    .rider-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    .check-btn {
+      margin-left: auto;
+      background: #24574b;
+      color: white;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    .check-btn:hover { background: #193c34; }
+
+    /* Pending & Completed Orders */
+    .pending-item, .completed-item {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      background: #fff;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+    .pending-item .food-details,
+    .completed-item .food-details { flex: 1; }
+    .arrow-btn {
+      background: #24574b;
+      color: white;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .arrow-btn:hover { background: #193c34; }
+
+    .summary-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .summary-table td {
+      padding: 6px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    /* Add Product Button */
+    .add-btn {
+      background: #24574b;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      font-size: 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      float: right;
+      margin-bottom: 15px;
+    }
+    .add-btn:hover { background: #193c34; }
+
+    /* Form fields */
+    .popup-panel input, .popup-panel select {
+      width: 100%;
+      padding: 6px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    .popup-panel button.save-btn {
+      background: #24574b;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .popup-panel button.save-btn:hover { background: #193c34; }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="profile-logo">
+      <a href="profile.html"><img src="img/profile.png" alt="Profile Logo" /></a>
+      <h2>SWIFTBITE ADMIN</h2>
+    </div>
+    <a href="#" class="active" onclick="showSection('dashboard')">Dashboard</a>
+    <a href="#" onclick="showSection('menu')">Menu</a>
+    <a href="#" onclick="showSection('rider')">Rider</a>
+    <a href="#" onclick="showSection('finances')">Finances</a>
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+    <!-- Dashboard -->
+    <div id="dashboard" class="content-section active">
+      <h1>Dashboard</h1>
+      <div class="card-container">
+        <div class="card" onclick="showSection('delivery')">Delivery<br>10</div>
+        <div class="card" onclick="showSection('pending')">Pending Orders<br>8</div>
+        <div class="card" onclick="showSection('completed')">Completed Orders<br>17</div>
+        <div class="card" onclick="showSection('sales')">Total Sales</div>
+        <div class="card" onclick="showSection('dishes')">Best Selling Dishes</div>
+        <div class="card" onclick="showSection('restaurants')">Best Selling Restaurants</div>
+      </div>
+    </div>
+
+    <!-- Delivery -->
+    <div id="delivery" class="content-section">
+      <button class="back-btn" onclick="showSection('dashboard')">← Back</button>
+      <h1>DELIVERY</h1>
+
+      <div class="delivery-item">
+        <img src="img/bcb.jfif" class="food-img">
+        <div class="food-details"><p class="food-name">BBQ Chicken Burger</p><p class="food-restaurant">KFC</p></div>
+        <button class="motor-btn" onclick="toggleAssignRider(event)">🛵</button>
+      </div>
+      <div class="delivery-item">
+        <img src="img/bvs.jfif" class="food-img">
+        <div class="food-details"><p class="food-name">Bacon and Veggies Salad</p><p class="food-restaurant">McDonald's</p></div>
+        <button class="motor-btn" onclick="toggleAssignRider(event)">🛵</button>
+      </div>
+    </div>
+
+    <!-- Assign Rider Popup -->
+    <div id="assignRiderPanel" class="assign-panel">
+      <h3>ASSIGN RIDER <button class="close-btn" onclick="closeAssignRider()">×</button></h3>
+      <div class="rider"><img src="img/rider.png" class="rider-img"><p>RIDER #1</p><button class="check-btn">✔</button></div>
+      <div class="rider"><img src="img/rider.png" class="rider-img"><p>RIDER #2</p><button class="check-btn">✔</button></div>
+      <div class="rider"><img src="img/rider.png" class="rider-img"><p>RIDER #3</p><button class="check-btn">✔</button></div>
+    </div>
+
+    <!-- Pending Orders -->
+    <div id="pending" class="content-section">
+      <button class="back-btn" onclick="showSection('dashboard')">← Back</button>
+      <h1>PENDING ORDERS</h1>
+
+      <div class="pending-item">
+        <img src="img/ccb.jpg" class="food-img">
+        <div class="food-details"><p class="food-name">Classic Cheese Burger</p><p>₱120.00</p></div>
+        <button class="arrow-btn" onclick="toggleOrderSummary(event)">→</button>
+      </div>
+      <div class="pending-item">
+        <img src="img/vbhss.webp" class="food-img">
+        <div class="food-details"><p class="food-name">Veggie & Bacon Hot Sauce Sandwich</p><p>₱220.00</p></div>
+        <button class="arrow-btn" onclick="toggleOrderSummary(event)">→</button>
+      </div>
+    </div>
+
+    <!-- Completed Orders -->
+    <div id="completed" class="content-section">
+      <button class="back-btn" onclick="showSection('dashboard')">← Back</button>
+      <h1>COMPLETED ORDERS</h1>
+
+      <div class="completed-item">
+        <img src="img/ccb.jpg" class="food-img">
+        <div class="food-details"><p class="food-name">Classic Cheese Burger (400 Cals)</p><p>₱120.00</p></div>
+        <button class="arrow-btn" onclick="toggleCompletedSummary(event)">→</button>
+      </div>
+      <div class="completed-item">
+        <img src="img/scssb.jpg" class="food-img">
+        <div class="food-details"><p class="food-name">Simply Cheese with Sesame Seed buns</p><p>₱150.00</p></div>
+        <button class="arrow-btn" onclick="toggleCompletedSummary(event)">→</button>
+      </div>
+    </div>
+
+    <!-- Order Summary Popup (shared) -->
+    <div id="orderSummaryPanel" class="summary-panel">
+      <h3>ORDER SUMMARY <button class="close-btn" onclick="closeOrderSummary()">×</button></h3>
+      <img src="img/ccb.jpg" class="food-img">
+      <p><b>Classic Cheese Burger</b><br>₱120.00</p>
+      <table class="summary-table">
+        <tr><td>Quantity:</td><td>1</td></tr>
+        <tr>
+          <td>Customer’s Info:</td>
+          <td><a href="#" onclick="showCustomerInfo()">View</a></td>
+        </tr>
+        <tr><td>Mode of Payment:</td><td>---</td></tr>
+        <tr><td>Assigned Rider:</td><td>---</td></tr>
+        <tr><td>Delivery Fee:</td><td>₱50</td></tr>
+        <tr><td>Total Payment:</td><td>₱170</td></tr>
+      </table>
+    </div>
+
+    <!-- Customer Info Popup -->
+    <div id="customerInfoPanel" class="summary-panel">
+      <h3>CUSTOMER INFO <button class="close-btn" onclick="closeCustomerInfo()">×</button></h3>
+      <p><b>Name:</b> Juan Dela Cruz</p>
+      <p><b>Address:</b> 123 Sampaloc St, Manila</p>
+      <p><b>Contact:</b> 09123456789</p>
+    </div>
+
+	<!-- Total Sales -->
+	<div id="sales" class="content-section">
+	  <button class="back-btn" onclick="showSection('dashboard')">← Back</button>
+	  <h1>TOTAL SALES</h1>
+
+	  <div style="display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap;">
+		
+		<!-- Left side: Dropdown + Table -->
+		<div style="flex: 1; min-width: 250px;">
+		  <label for="yearSelect"><b>YEAR</b></label>
+		  <select id="yearSelect" style="margin: 10px 0; padding: 5px;">
+			<option value=""></option>
+			<option value="2020">2020</option>
+			<option value="2021">2021</option>
+			<option value="2022">2022</option>
+			<option value="2023">2023</option>
+			<option value="2024">2024</option>
+			<option value="2025">2025</option>
+		  </select>
+
+		  <table style="width: 100%; border-collapse: collapse; margin-top: 10px; background:#fff;">
+			<tr style="background:#f0f0f0;">
+			  <th style="border:1px solid #ccc; padding:6px; text-align:left;">MONTH</th>
+			  <th style="border:1px solid #ccc; padding:6px; text-align:left;">SALES</th>
+			</tr>
+			<tr><td style="border:1px solid #ccc; padding:6px;">January</td><td style="border:1px solid #ccc; padding:6px;">-</td></tr>
+			<tr><td style="border:1px solid #ccc; padding:6px;">February</td><td style="border:1px solid #ccc; padding:6px;">-</td></tr>
+			<tr><td style="border:1px solid #ccc; padding:6px;">March</td><td style="border:1px solid #ccc; padding:6px;">-</td></tr>
+			<tr><td style="border:1px solid #ccc; padding:6px;">April</td><td style="border:1px solid #ccc; padding:6px;">-</td></tr>
+			<tr><td style="border:1px solid #ccc; padding:6px;">May</td><td style="border:1px solid #ccc; padding:6px;">-</td></tr>
+			<tr><td style="border:1px solid #ccc; padding:6px;">June</td><td style="border:1px solid #ccc; padding:6px;">-</td></tr>
+			<tr><td style="border:1px solid #ccc; padding:6px;">July</td><td style="border:1px solid #ccc; padding:6px;">-</td></tr>
+			<tr><td style="border:1px solid #ccc; padding:6px;">August</td><td style="border:1px solid #ccc; padding:6px;">-</td></tr>
+			<tr><td style="border:1px solid #ccc; padding:6px;">September</td><td style="border:1px solid #ccc; padding:6px;">-</td></tr>
+			<tr><td style="border:1px solid #ccc; padding:6px;">October</td><td style="border:1px solid #ccc; padding:6px;">-</td></tr>
+			<tr><td style="border:1px solid #ccc; padding:6px;">November</td><td style="border:1px solid #ccc; padding:6px;">-</td></tr>
+			<tr><td style="border:1px solid #ccc; padding:6px;">December</td><td style="border:1px solid #ccc; padding:6px;">-</td></tr>
+		  </table>
+		</div>
+	  </div>
+	</div>
+
+    <!-- Menu Section -->
+    <div id="menu" class="content-section">
+      <h1>Menu</h1>
+      <button class="add-btn" onclick="openAddProduct()">+ Add Product</button>
+    </div>
+
+    <!-- Add Product Modal -->
+	<div id="addProductModal" class="modal">
+	  <div class="modal-content">
+		<h3>Add Product <button class="close-btn" onclick="closeAddProduct()">×</button></h3>
+		<input type="text" placeholder="Product Name">
+		<input type="number" placeholder="Price">
+		<input type="text" placeholder="Category">
+		<button class="save-btn">Save</button>
+	  </div>
+	</div>
+
+
+    <!-- Other Sections -->
+    <div id="dishes" class="content-section"><h1>Best Selling Dishes</h1></div>
+    <div id="restaurants" class="content-section"><h1>Best Selling Restaurants</h1></div>
+    <div id="rider" class="content-section"><h1>Rider</h1></div>
+    <div id="finances" class="content-section"><h1>Finances</h1></div>
+  </div>
+
+  <script>
+    function showSection(sectionId) {
+      document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
+      document.getElementById(sectionId).classList.add('active');
+
+      if (event.target.tagName === "A") {
+        document.querySelectorAll('.sidebar a').forEach(link => link.classList.remove('active'));
+        event.target.classList.add('active');
+      }
+    }
+
+    function toggleAssignRider(e) {
+      const panel = document.getElementById("assignRiderPanel");
+      const row = e.target.closest(".delivery-item").getBoundingClientRect();
+      const main = document.querySelector(".main").getBoundingClientRect();
+      panel.style.top = (row.top - main.top) + "px";
+      panel.style.display = "block";
+
+      document.addEventListener("click", function handler(ev) {
+        if (!panel.contains(ev.target) && !ev.target.classList.contains("motor-btn")) {
+          panel.style.display = "none";
+          document.removeEventListener("click", handler);
+        }
+      });
+    }
+    function closeAssignRider() { document.getElementById("assignRiderPanel").style.display = "none"; }
+
+    function toggleOrderSummary(e) {
+      const panel = document.getElementById("orderSummaryPanel");
+      const row = e.target.closest(".pending-item").getBoundingClientRect();
+      const main = document.querySelector(".main").getBoundingClientRect();
+      panel.style.top = (row.top - main.top) + "px";
+      panel.style.display = "block";
+
+      document.addEventListener("click", function handler(ev) {
+        if (!panel.contains(ev.target) && !ev.target.classList.contains("arrow-btn")) {
+          panel.style.display = "none";
+          document.removeEventListener("click", handler);
+        }
+      });
+    }
+
+    function toggleCompletedSummary(e) {
+      const panel = document.getElementById("orderSummaryPanel");
+      const row = e.target.closest(".completed-item").getBoundingClientRect();
+      const main = document.querySelector(".main").getBoundingClientRect();
+      panel.style.top = (row.top - main.top) + "px";
+      panel.style.display = "block";
+
+      document.addEventListener("click", function handler(ev) {
+        if (!panel.contains(ev.target) && !ev.target.classList.contains("arrow-btn")) {
+          panel.style.display = "none";
+          document.removeEventListener("click", handler);
+        }
+      });
+    }
+
+    function closeOrderSummary() { document.getElementById("orderSummaryPanel").style.display = "none"; }
+
+    /* Customer Info Popup */
+    function showCustomerInfo() {
+      const panel = document.getElementById("customerInfoPanel");
+      panel.style.display = "block";
+
+      document.addEventListener("click", function handler(ev) {
+        if (!panel.contains(ev.target) && ev.target.innerText !== "View") {
+          panel.style.display = "none";
+          document.removeEventListener("click", handler);
+        }
+      });
+    }
+    function closeCustomerInfo() {
+      document.getElementById("customerInfoPanel").style.display = "none";
+    }
+
+    /* Add Product Popup */
+    function openAddProduct() {
+      const panel = document.getElementById("addProductPopup");
+      panel.style.display = "block";
+    }
+    function closeAddProduct() {
+      document.getElementById("addProductPopup").style.display = "none";
+    }
+  </script>
+</body>
+</html>

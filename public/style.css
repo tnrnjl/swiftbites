@@ -1,0 +1,392 @@
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        background: white;
+    }
+
+    .nav-links {
+        list-style: none;
+        display: flex;
+        gap: 20px;
+    }
+
+    .nav-links li a {
+        text-decoration: none;
+        color: black;
+    }
+
+    .auth-buttons a {
+        text-decoration: none;
+        color: white;
+         background-color: #2f6f61;
+        padding: 8px 16px;
+        border-radius: 4px;
+    }
+
+    .btn-primary {
+        background-color: #2f6f61;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .btn-primary:hover {
+        background-color: #25584d;
+    }
+
+	body {
+		font-family: Arial, sans-serif;
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+		background-color: #f4f4f4;
+		color: #333;
+	}
+
+	.container {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 20px;
+	}
+
+	/* Header and Navigation */
+	header {
+		background-color: #fff;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		padding: 15px 0;
+	}
+
+	nav {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 20px;
+	}
+
+	.logo h1 {
+		margin: 0;
+		color: #2f6f61; 
+	}
+
+	.nav-links {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+	}
+
+	.nav-links li {
+		margin-left: 20px;
+	}
+
+	.nav-links a {
+		text-decoration: none;
+		color: #333;
+		font-weight: bold;
+		transition: color 0.3s ease;
+	}
+
+	.nav-links a:hover {
+		color: #2f6f61;
+	}
+
+	/* Hero Section */
+	.hero {
+		background-image: url("img/cover.jpg");
+		background-size: cover;
+		background-position: center;
+		color: #fff;
+		text-align: center;
+		padding: 100px 20px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 500px;
+	}
+
+	.hero-content {
+		max-width: 800px;
+	}
+
+	.hero h2 {
+		font-size: 53px;
+		margin-bottom: 20px;
+	}
+
+	.hero p {
+		font-size: 25px;
+		margin-bottom: 30px;
+	}
+
+	/* General Button Styles */
+	.btn-primary {
+		background-color: #2f6f61; 
+		color: #fff;
+		padding: 15px 30px;
+		border: none;
+		border-radius: 5px;
+		font-size: 1em;
+		cursor: pointer;
+		transition: background-color 0.3s ease;
+	}
+
+	.btn-primary:hover {
+		background-color: #24574b; 
+	}
+
+	.btn-secondary {
+		background-color: transparent;
+		color: #2f6f61; 
+		padding: 15px 30px;
+		border: 2px solid #2f6f61;
+		border-radius: 5px;
+		font-size: 1em;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		margin-right: 10px;
+	}
+
+	.btn-secondary:hover {
+		background-color: #2f6f61;
+		color: #fff;
+	}
+
+	/* Restaurants Section */
+	.restaurants {
+		padding: 60px 20px;
+		text-align: center;
+		background-color: #fff;
+	}
+
+	.restaurants h3 {
+		font-size: 2.5em;
+		margin-bottom: 40px;
+		color: #333;
+	}
+
+	.restaurants-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+		gap: 30px;
+		max-width: 1000px;
+		margin: 0 auto;
+	}
+
+	.restaurant-item {
+		background-color: #f9f9f9;
+		border-radius: 10px;
+		padding: 20px;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		transition: transform 0.3s ease;
+	}
+
+	.restaurant-item:hover {
+		transform: translateY(-10px);
+	}
+
+	.restaurant-item img {
+		width: 100%;
+		height: 200px; 
+		object-fit: cover; 
+		border-radius: 5px;
+	}
+
+	.restaurant-item h4 {
+		font-size: 1.5em;
+		color: #333;
+	}
+
+	/* Featured Dishes Section */
+	.featured-dishes {
+		padding: 60px 20px;
+		text-align: center;
+		background-color: #f9f9f9;
+	}
+
+	.featured-dishes h3 {
+		font-size: 2.5em;
+		margin-bottom: 40px;
+		color: #333;
+	}
+
+	.dishes-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+		gap: 30px;
+		max-width: 1000px;
+		margin: 0 auto;
+	}
+
+	.dish-item {
+		background-color: #fff;
+		border-radius: 10px;
+		padding: 20px;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		transition: transform 0.3s ease;
+	}
+
+	.dish-item:hover {
+		transform: translateY(-10px);
+	}
+
+	.dish-item img {
+		width: 100%;
+		height: 200px; /* Fixed height */
+		object-fit: cover; /* Prevents stretching/squishing */
+		border-radius: 5px;
+		display: block;
+		margin: 0 auto;
+	}
+
+	.dish-item h4 {
+		font-size: 1.5em;
+		color: #333;
+		margin-bottom: 10px;
+	}
+
+	.dish-item p {
+		font-size: 1em;
+		color: #666;
+	}
+
+	/* About Us Section */
+	.about-us {
+		padding: 60px 20px;
+		text-align: center;
+		background-color: #f4f4f4;
+	}
+
+	.about-us h3 {
+		font-size: 2.5em;
+		margin-bottom: 20px;
+		color: #333;
+	}
+
+	.about-us p {
+		max-width: 800px;
+		margin: 0 auto;
+		font-size: 1.1em;
+		line-height: 1.6;
+	}
+
+	/* Contact Us Section */
+	.contact-us {
+		padding: 60px 20px;
+		text-align: center;
+		background-color: #fff;
+	}
+
+	.contact-us h3 {
+		font-size: 2.5em;
+		margin-bottom: 30px;
+		color: #333;
+	}
+
+	.contact-us form {
+		max-width: 600px;
+		margin: 0 auto;
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+	}
+
+	.contact-us input[type="text"],
+	.contact-us input[type="email"],
+	.contact-us textarea {
+		width: 100%;
+		padding: 15px;
+		border: 1px solid #ddd;
+		border-radius: 5px;
+		font-size: 1em;
+	}
+
+	.contact-us textarea {
+		min-height: 120px;
+		resize: vertical;
+	}
+
+	/* Footer */
+	footer {
+		background-color: #333;
+		color: #fff;
+		text-align: center;
+		padding: 20px 0;
+		margin-top: 40px;
+	}
+
+	footer p {
+		margin: 0;
+		font-size: 0.9em;
+	}
+
+	/* Responsive Design */
+	@media (max-width: 768px) {
+		nav {
+			flex-direction: column;
+		}
+
+		.nav-links {
+			margin-top: 15px;
+		}
+
+		.nav-links li {
+			margin: 0 10px;
+		}
+
+		.hero h2 {
+			font-size: 2.5em;
+		}
+
+		.hero p {
+			font-size: 1em;
+		}
+
+		.restaurants-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.dishes-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+/* Contact Us Modal */
+.modal {
+    display: none; /* hidden by default */
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    position: relative;
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0px 5px 20px rgba(0,0,0,0.3);
+    animation: popIn 0.3s ease-in-out;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #444;
+}

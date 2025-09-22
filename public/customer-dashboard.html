@@ -105,72 +105,27 @@
             <p>SwiftBite is dedicated to bringing you the best food delivery experience. We partner with local restaurants to deliver fresh and delicious meals right to your doorstep.</p>
         </section>
 
-<!-- CONTACT FORM -->
-<section id="contact" class="contact-us">
-    <h3>Contact Us</h3>
-    <p>Have questions or feedback? Reach out to us!</p>
-    <form id="contactForm">
-        <input type="text" id="name" placeholder="Your Name" required>
-        <input type="email" id="email" placeholder="Your Email" required>
-        <textarea id="message" placeholder="Your Message" required></textarea>
-        <button type="submit" class="btn-primary">Send Message</button>
-    </form>
-</section>
+        <section id="contact" class="contact-us">
+            <h3>Contact Us</h3>
+            <p>Have questions or feedback? Reach out to us!</p>
+            <form>
+                <input type="text" placeholder="Your Name">
+                <input type="email" placeholder="Your Email">
+                <textarea placeholder="Your Message"></textarea>
+                <button type="submit" class="btn-primary">Send Message</button>
+            </form>
+        </section>
+    </main>
 
-<!-- Success Modal -->
-<div id="successModal" class="modal">
-  <div class="modal-content">
-    <span class="close-btn" id="closeModal">&times;</span>
-    <h2>✅ Message Sent!</h2>
-    <p>Your message has been sent successfully. We'll get back to you soon!</p>
-  </div>
-</div>
+    <footer>
+        <p>&copy; 2025 SwiftBite. All rights reserved.</p>
+    </footer>
 
+    <!-- Logout Button -->
+    <div class="auth-buttons">
+        <button id="logoutButton" class="btn-secondary" style="display:none;">Logout</button>
+    </div>
 
-
-<script>
-   const contactForm = document.getElementById("contactForm");
-const successModal = document.getElementById("successModal");
-const closeModal = document.getElementById("closeModal");
-
-contactForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-    const message = document.getElementById("message").value;
-
-    try {
-        await db.collection("messages").add({
-            name: name,
-            email: email,
-            message: message,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp()
-        });
-
-        // Show modal only after success
-        successModal.style.display = "flex";
-        contactForm.reset();
-
-    } catch (error) {
-        alert("❌ Error sending message. Try again.");
-        console.error("Error writing document: ", error);
-    }
-});
-
-// Close modal when X is clicked
-closeModal.onclick = () => {
-    successModal.style.display = "none";
-};
-
-// Close modal when clicking outside the box
-window.onclick = (e) => {
-    if (e.target === successModal) {
-        successModal.style.display = "none";
-    }
-};
-
-</script>
-
+    <script src="script.js"></script>
 </body>
 </html>

@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "swiftsbites"
-  }
+    "default": "soft-eng-2adc3",
+    "soft-eng": "soft-eng-2adc3"
+  },
+  "targets": {},
+  "etags": {}
 }
